@@ -1,0 +1,196 @@
+[
+    {
+        "id": "spotify",
+        "name": "Spotify",
+        "description": "Music streaming platform",
+        "url": "https://spotify.com",
+        "category": "entertainment",
+        "icon": "/img/icons/spotify.png"
+    },
+    {
+        "id": "now-gg",
+        "name": "Now.gg",
+        "description": "Mobile cloud gaming platform",
+        "url": "https://now.gg",
+        "category": "entertainment",
+        "icon": "/img/icons/nowgg.png"
+    },
+    {
+        "id": "geforce-now",
+        "name": "GeForce Now",
+        "description": "Cloud gaming service",
+        "url": "https://www.nvidia.com/en-us/geforce-now/",
+        "category": "entertainment",
+        "icon": "/img/icons/geforcenow.png"
+    },
+    {
+        "id": "discord",
+        "name": "Discord",
+        "description": "Chat for communities and friends",
+        "url": "https://discord.com",
+        "category": "social",
+        "icon": "/img/icons/discord.png"
+    },
+    {
+        "id": "reddit",
+        "name": "Reddit",
+        "description": "Social news aggregation and discussion",
+        "url": "https://www.reddit.com",
+        "category": "social",
+        "icon": "/img/icons/reddit.png"
+    },
+    {
+        "id": "google",
+        "name": "Google",
+        "description": "Search the world's information",
+        "url": "https://www.google.com",
+        "category": "productivity",
+        "icon": "/img/icons/google.png"
+    },
+    {
+        "id": "anura-os",
+        "name": "Anura OS",
+        "description": "Open-source Web OS",
+        "url": "https://anura.pro",
+        "category": "productivity",
+        "icon": "/img/icons/anuraos.png"
+    },
+    {
+        "id": "julius-ai",
+        "name": "JuliusAI",
+        "description": "AI chatbot",
+        "url": "https://julius.ai/ai-chatbot",
+        "category": "productivity",
+        "icon": "/img/icons/gpt.webp"
+    },
+    {
+        "id": "gemini",
+        "name": "Gemini",
+        "description": "Google's AI project",
+        "url": "https://gemini.google.com",
+        "category": "productivity",
+        "icon": "/img/icons/gemini.webp"
+    },
+    {
+        "id": "twitter",
+        "name": "Twitter",
+        "description": "Social networking service",
+        "url": "https://twitter.com",
+        "category": "social",
+        "icon": "/img/icons/twitter-x.webp"
+    },
+    {
+        "id": "pinterest",
+        "name": "Pinterest",
+        "description": "Image sharing and social media service",
+        "url": "https://pinterest.com",
+        "category": "social",
+        "icon": "/img/icons/pinterest.webp"
+    },
+    {
+        "id": "coolmath",
+        "name": "CoolMath",
+        "description": "Educational games",
+        "url": "https://coolmathgames.com",
+        "category": "entertainment",
+        "icon": "/img/icons/coolmathgames.webp"
+    },
+    {
+        "id": "crazygames",
+        "name": "CrazyGames",
+        "description": "Online games",
+        "url": "https://crazygames.com",
+        "category": "entertainment",
+        "icon": "/img/icons/crazygames.webp"
+    },
+    {
+        "id": "y8-games",
+        "name": "Y8 Games",
+        "description": "Online games",
+        "url": "https://y8.com",
+        "category": "entertainment",
+        "icon": "/img/icons/y8.webp"
+    },
+    {
+        "id": "chess-com",
+        "name": "Chess.com",
+        "description": "Online chess platform",
+        "url": "https://chess.com",
+        "category": "entertainment",
+        "icon": "/img/icons/chess.webp"
+    },
+    {
+        "id": "symbolab",
+        "name": "Symbolab Math Solver",
+        "description": "Math problem solver",
+        "url": "https://www.symbolab.com",
+        "category": "productivity",
+        "icon": "/img/icons/symbolab.webp",
+        "height": 130
+    },
+    {
+        "id": "youtube",
+        "name": "YouTube",
+        "description": "Video sharing platform",
+        "url": "https://youtube.com",
+        "category": "entertainment",
+        "icon": "/img/icons/youtube.webp"
+    },
+    {
+        "id": "netflix",
+        "name": "Netflix",
+        "description": "Streaming service",
+        "url": "https://netflix.com",
+        "category": "entertainment",
+        "icon": "/img/icons/netflix.webp"
+    },
+    {
+        "id": "sflix",
+        "name": "SFlix Movies",
+        "description": "Streaming service",
+        "url": "https://vidstream.to",
+        "category": "entertainment",
+        "icon": "/img/icons/sflix.webp"
+    },
+    {
+        "id": "9anime",
+        "name": "9anime",
+        "description": "Anime streaming service",
+        "url": "https://9animetv.to",
+        "category": "entertainment",
+        "icon": "/img/icons/9anim.webp"
+    },
+    {
+        "id": "twitch",
+        "name": "Twitch",
+        "description": "Live streaming platform",
+        "url": "https://twitch.tv",
+        "category": "entertainment",
+        "icon": "/img/icons/twitch.webp"
+    },
+    {
+        "id": "tiktok",
+        "name": "TikTok",
+        "description": "Short-form video platform",
+        "url": "https://tiktok.com",
+        "category": "entertainment",
+        "icon": "/img/icons/tiktok.webp"
+    },
+    {
+        "id": "github",
+        "name": "GitHub",
+        "description": "Code hosting platform",
+        "url": "https://github.com",
+        "category": "productivity",
+        "icon": "/img/icons/github.webp"
+    },
+    {
+        "id": "vscode",
+        "name": "Visual Studio Code",
+        "description": "Code editor",
+        "url": "https://vscode.dev",
+        "category": "productivity",
+        "icon": "/img/icons/vscode.webp",
+        "height": 130
+    }
+]

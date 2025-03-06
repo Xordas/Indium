@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apps - Indium</title>
+
+  <script src="/uv/uv.bundle.js"></script>
+  <script src="/uv/uv.config.js"></script>
+  <script src="/baremux/index.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("/uv/sw.js");
+        });
+    }
+    </script>
+  <link rel="stylesheet" href="css/apps.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+ <!-- Navbar -->
+ <nav class="navbar" id="navbar">
+  <div class="logo">
+    <a href="/" class="logo-text" style="text-decoration: none;">Indium</a>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="apps" aria-label="Apps" class="nav-link active">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span>Apps</span>
+    </a>
+    <a href="games" aria-label="Games" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+      <span>Games</span>
+    </a>
+    <a href="ai" aria-label="AI" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
+      <span>AI</span>
+    </a>
+    <a href="settings" aria-label="Settings" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      <span>Settings</span>
+    </a>
+    <a href="#" aria-label="Credits" class="nav-link">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span>Credits</span>
+    </a>
+  </div>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+    <span class="menu-bar"></span>
+    <span class="menu-bar"></span>
+    <span class="menu-bar"></span>
+  </button>
+</nav>
+
+  <!-- Main content -->
+  <div class="main apps-container" id="mainContent">
+    
+    <div class="search-container apps-search">
+      <input type="text" id="searchInput" placeholder="Search apps..." aria-label="Search apps">
+      <div class="search-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+    </div>
+
+    <div class="categories">
+      <button class="category-btn active" data-category="all">All</button>
+      <button class="category-btn" data-category="social">Social</button>
+      <button class="category-btn" data-category="productivity">Productivity</button>
+      <button class="category-btn" data-category="entertainment">Entertainment</button>
+      <button class="category-btn" data-category="education">Education</button>
+    </div>
+    
+    <div class="apps-grid" id="appsGrid">
+      
+    </div>
+
+    <div class="error-message" id="errorMessage" style="display: none;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <p>Failed to load apps. Please try again later.</p>
+      <button id="retryButton">Retry</button>
+    </div>
+  </div>
+
+  <div class="loading" id="loadingIndicator">
+    <div class="spinner"></div>
+  </div>
+
+  <button class="back-button" id="backButton">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    <span>Back</span>
+  </button>
+
+  
+  <iframe id="iframeWindow" title="Proxied content"></iframe>
+  
+  <iframe id="loadingFrame" title="Loading" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 310;"></iframe>
+  
+
+  <script src="js/apps.js"></script>
+  <script src="js/settings-manager.js"></script>
+</body>
+</html>

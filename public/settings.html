@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Indium</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/settings.css">
+  <script src="js/settings.js"></script>
+  <script src="js/settings-manager.js"></script>
+  <script src="js/cloaking.js"></script>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="logo">
+      <a href="/" class="logo-text" style="text-decoration: none;">Indium</a>
+
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="apps" aria-label="Apps" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Apps</span>
+      </a>
+      <a href="games" aria-label="Games" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        <span>Games</span>
+      </a>
+      <a href="ai" aria-label="AI" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"></path></svg>
+        <span>AI</span>
+      </a>
+      <a href="#" aria-label="Settings" class="nav-link active">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <span>Settings</span>
+      </a>
+      <a href="#" aria-label="Credits" class="nav-link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span>Credits</span>
+      </a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+      <span class="menu-bar"></span>
+    </button>
+  </nav>
+
+  <!-- Main content -->
+  <div class="main" id="mainContent">
+
+    <div class="settings-layout">
+      <!-- Settings Sidebar -->
+      <div class="settings-sidebar">
+        <div class="settings-nav">
+          <div class="settings-nav-item active" data-section="cloaking">
+            <svg id="cloaking-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="settings-nav-icon"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Cloaking
+          </div>
+          <div class="settings-nav-item" data-section="security">
+            <svg id="security-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="settings-nav-icon"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Security
+          </div>
+          <div class="settings-nav-item" data-section="appearance">
+            <svg id="appearance-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="settings-nav-icon"><circle cx="12" cy="12" r="10"></circle><path d="m16 12-4-4-4 4"></path><path d="M12 16V8"></path></svg>
+            Appearance
+          </div>
+          <div class="settings-nav-item" data-section="advanced">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="nav-icon"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Advanced
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-content">
+        <div class="settings-section active" id="cloaking-section">
+          <div class="settings-section-header">
+            <h2 class="settings-section-title">Cloaking Settings</h2>
+            <p class="settings-section-description">Customize how your browser tab appears to others</p>
+          </div>
+
+          <div class="settings-cards">
+            <div class="setting-card">
+              <h3 class="setting-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="setting-title-icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                Tab Cloaking
+              </h3>
+              <p class="setting-description">Changes this tab's icon and title to disguise what it actually is.</p>
+              <div class="button-container">
+                <select id="tabCloakSelect" class="select-dropdown">
+                  <option value="">Disabled</option>
+                  <option value="drive">Google Drive</option>
+                  <option value="docs">Google Docs</option>
+                  <option value="classroom">Google Classroom</option>
+                  <option value="canvas">Canvas</option>
+                  <option value="powerschool">PowerSchool</option>
+                  <option value="gmail">Gmail</option>
+                  <option value="google">Google</option>
+                </select>
+              </div>
+              <div id="tabCloakStatus" class="setting-status disabled">Currently: Disabled</div>
+            </div>
+
+            <div class="setting-card">
+              <h3 class="setting-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="setting-title-icon"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path></svg>
+                Clickoff Cloaking
+              </h3>
+              <p class="setting-description">Automatically changes the tab title and icon when switching to another tab.</p>
+              <div class="button-container">
+                <select id="clickoffSelect" class="select-dropdown">
+                  <option value="">Disabled</option>
+                  <option value="docs">Google Docs</option>
+                  <option value="classroom">Google Classroom</option>
+                  <option value="canvas">Canvas</option>
+                  <option value="powerschool">PowerSchool</option>
+                  <option value="gmail">Gmail</option>
+                  <option value="drive">Google Drive</option>
+                </select>
+              </div>
+              <div id="clickoffStatus" class="setting-status disabled">Currently: Disabled</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section" id="security-section">
+          <div class="settings-section-header">
+            <h2 class="settings-section-title">Security Settings</h2>
+            <p class="settings-section-description">Configure security features and emergency options</p>
+          </div>
+
+          <div class="settings-cards">
+            <div class="setting-card">
+              <h3 class="setting-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="setting-title-icon"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                Panic Keys
+              </h3>
+              <p class="setting-description">Redirects to another URL when specific keys are pressed.</p>
+              <div class="panic-key-container">
+                <div class="panic-url-section">
+                  <label for="panicUrl">Redirect URL:</label>
+                  <input type="url" id="panicUrl" class="input-field" 
+                         placeholder="https://classroom.google.com" 
+                         value="https://classroom.google.com">
+                </div><br>
+                <div class="keybind-section">
+                  <div class="keybind-list" id="keybindList">
+                  </div>
+                  <button class="option" id="addKeybindBtn">Add Keybind</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="setting-card">
+              <h3 class="setting-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="setting-title-icon"><path d="M10 16l-6-6 6-6"></path><path d="M20 21v-7a4 4 0 0 0-4-4H5"></path></svg>
+                Leave Confirmation
+              </h3>
+              <p class="setting-description">Shows a popup when the tab is attempted to be closed or redirected. <br>Useful for DyKnow & GoGuardian users.</p>
+              <div class="button-container">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="leaveConfToggle">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div id="leaveConfStatus" class="setting-status disabled">Currently: Disabled</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section" id="appearance-section">
+          <div class="settings-section-header">
+            <h2 class="settings-section-title">Appearance Settings</h2>
+            <p class="settings-section-description">Customize the visual appearance of the proxy</p>
+          </div>
+
+          <div class="settings-cards">
+            <div class="setting-card">
+              <h3 class="setting-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="setting-title-icon"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                Theme
+              </h3>
+              <p class="setting-description">Choose between light and dark mode for the interface. (In Progress)</p>
+              <div class="button-container">
+                <button class="option active" id="darkTheme">Dark</button>
+                <button class="option" id="lightTheme">Light</button>
+              </div>
+            </div>
+
+            <div class="setting-card">
+              <h3 class="setting-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="setting-title-icon"><path d="M4 15s1-1 4-1 4 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                Accent Color
+              </h3>
+              <p class="setting-description">Change the accent color used throughout the interface.</p>
+              <div class="button-container">
+                <button class="option active" style="background-color: #6366f1;" id="indigo">Indigo</button>
+                <button class="option" style="background-color: #8b5cf6;" id="purple">Purple</button>
+                <button class="option" style="background-color: #ec4899;" id="pink">Pink</button>
+                <button class="option" style="background-color: #10b981;" id="green">Green</button>
+                <button class="option" style="background-color: #3b82f6;" id="blue">Blue</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section" id="advanced-section">
+          <div class="settings-section-header">
+            <h2 class="settings-section-title">Advanced Settings</h2>
+            <p class="settings-section-description">Configure advanced cloaking and security options</p>
+          </div>
+
+          <div class="settings-cards">
+            <div class="setting-card">
+              <h3 class="setting-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="setting-title-icon"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                About:Blank Cloak
+              </h3>
+              <p class="setting-description">Hides this page in an about:blank link.</p>
+              <div class="button-container">
+                <button class="option" id="openBlanker">Open in about:blank</button>
+              </div>
+            </div>
+
+            
+
+            <div class="setting-card">
+              <h3 class="setting-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="setting-title-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                Reset All Settings
+              </h3>
+              <p class="setting-description">Reset all settings to their default values. This cannot be undone.</p>
+              <div class="button-container">
+                <button class="option" id="resetSettingsBtn">Reset Settings</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-footer">
+          <div class="settings-actions">
+            <button class="option" id="saveSettingsBtn">Save All Settings</button>
+            <button class="option" id="refreshPageBtn">Refresh Page</button>
+          </div>
+          <p>Indium • Version 1.0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

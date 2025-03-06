@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loading</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #6366f1;
+      --primary-hover: #4f46e5;
+      --text-color: #f8fafc;
+      --bg-dark: #0f172a;
+      --bg-darker: #020617;
+      --transition-speed: 0.3s;
+    }
+
+    body {
+      background: radial-gradient(circle at center, var(--bg-dark), var(--bg-darker));
+      color: var(--text-color);
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .loading-container {
+      text-align: center;
+    }
+
+    .loading-text {
+      font-size: 2.5rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 10px rgba(99, 102, 241, 0.3);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .loading-dots {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 30px;
+      margin-top: 20px;
+    }
+
+    .loading-dots div {
+      position: absolute;
+      top: 10px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      animation-timing-function: cubic-bezier(0, 1, 1, 0);
+    }
+
+    .loading-dots div:nth-child(1) {
+      left: 8px;
+      animation: loading-dots1 0.6s infinite;
+    }
+
+    .loading-dots div:nth-child(2) {
+      left: 8px;
+      animation: loading-dots2 0.6s infinite;
+    }
+
+    .loading-dots div:nth-child(3) {
+      left: 32px;
+      animation: loading-dots2 0.6s infinite;
+    }
+
+    .loading-dots div:nth-child(4) {
+      left: 56px;
+      animation: loading-dots3 0.6s infinite;
+    }
+
+    @keyframes loading-dots1 {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes loading-dots3 {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(0);
+      }
+    }
+
+    @keyframes loading-dots2 {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(24px, 0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-container">
+    <div class="loading-text">content is now loading</div>
+    <div class="loading-dots">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</body>
+</html>
+

@@ -1,0 +1,187 @@
+/* Apps specific styles */
+.apps-container {
+    padding-top: 2rem;
+  }
+  
+  .apps-search {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color);
+    opacity: 0.5;
+  }
+  
+  /* Categories */
+  .categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+  }
+  
+  .category-btn {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .category-btn:hover {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.5);
+  }
+  
+  .category-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  /* Apps grid */
+  .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 1rem;
+    margin: 0 auto;
+  }
+  
+  .app-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all var(--transition-speed) ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  /* Animation classes */
+  .app-card.animate-in {
+    animation: cardAppear 0.5s ease forwards;
+  }
+  
+  @keyframes cardAppear {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .app-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease;
+  }
+  
+  .app-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .app-card:hover::before {
+    opacity: 0.1;
+  }
+  
+  .app-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem;
+  }
+  
+  .app-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+  }
+  
+  .app-description {
+    font-size: 0.9rem;
+    color: rgba(248, 250, 252, 0.8);
+    margin-bottom: 1rem;
+  }
+  
+  .app-category {
+    font-size: 0.8rem;
+    color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+  }
+  
+  /* Error message */
+  .error-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-color);
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .error-message svg {
+    color: #ef4444;
+    width: 48px;
+    height: 48px;
+  }
+  
+  .error-message button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .error-message button:hover {
+    background: var(--primary-hover);
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .apps-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    .categories {
+      padding: 0 1rem;
+    }
+  }
+
+  
