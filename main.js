@@ -42,6 +42,10 @@ app.use("/ai", (req, res) => {
   res.sendFile(join(__dirname, publicPath, "ai.html"));
 });
 
+app.use("/credits", (req, res) => {
+  res.sendFile(join(__dirname, publicPath, "credits.html"));
+});
+
 app.use("/api/apps", (req, res) => {
   res.sendFile(join(__dirname, "appsgames", "apps.json"));
 });
