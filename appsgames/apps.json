@@ -19,7 +19,7 @@
         "id": "geforce-now",
         "name": "GeForce Now",
         "description": "Cloud gaming service",
-        "url": "https://www.nvidia.com/en-us/geforce-now/",
+        "url": "https://play.geforcenow.com",
         "category": "entertainment",
         "icon": "/img/icons/geforcenow.png"
     },
