@@ -96,6 +96,14 @@
         "icon": "/img/icons/coolmathgames.webp"
     },
     {
+        "id": "neal-fun",
+        "name": "Neal.fun",
+        "description": "Fun web experiments",
+        "url": "https://neal.fun",
+        "category": "entertainment",
+        "icon": "/img/icons/neal.webp"
+    },
+    {
         "id": "crazygames",
         "name": "CrazyGames",
         "description": "Online games",

@@ -481,6 +481,14 @@
         "icon": "/img/game/eggycar.webp"
     },
     {
+        "id": "jeffbezos",
+        "name": "You Are Jeff Bezos",
+        "description": "",
+        "url": "https://philome.la/KrisLigman/you-are-jeff-bezos/play/index.html",
+        "category": "Strategy",
+        "icon": "/img/game/bezos.png"
+    },
+    {
         "id": "bitlife",
         "name": "Bitlife",
         "description": "",
