@@ -15,6 +15,9 @@ import fetch from "node-fetch";
 import NodeCache from "node-cache";
 import rateLimit from "express-rate-limit";
 import pino from "pino";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const logger = pino({
   level: process.env.LOG_LEVEL || 'info',
@@ -33,12 +36,14 @@ const logger = pino({
       url: req.url ? new URL(req.url, 'http://localhost').pathname : undefined,
       id: req.id
     }),
-    res: (res) => ({
-      statusCode: res.statusCode
-    }),
+    res: (res) => ({ statusCode: res.statusCode }),
     err: pino.stdSerializers.err
   }
 });
+
+if (!process.env.DEEPINFRA_API_KEY) {
+  logger.warn('DEEPINFRA_API_KEY is not set in environment variables. API calls may be limited.');
+}
 
 const numCPUs = os.cpus().length;
 
@@ -63,13 +68,16 @@ if (cluster.isPrimary) {
       rss: Math.round(memUsage.rss / 1024 / 1024),
       workers: Object.keys(cluster.workers).length
     }, 'Resource usage (MB)');
-  }, 300000); 
+  }, 300000);
 } else {
   logger.info(`Worker ${process.pid} started`);
   
   const bare = createBareServer("/bare/");
   const __dirname = join(fileURLToPath(import.meta.url), "..");
   const app = express();
+  
+  app.set('trust proxy', 1);
+  
   const publicPath = "public";
 
   app.use((req, res, next) => {
@@ -78,7 +86,6 @@ if (cluster.isPrimary) {
     res.on('finish', () => {
       const diff = process.hrtime(start);
       const time = diff[0] * 1e3 + diff[1] * 1e-6;
-      
       const route = req.route ? req.route.path : req.path;
       
       logger.info({
@@ -103,7 +110,7 @@ if (cluster.isPrimary) {
       misses: stats.misses,
       hitRate: stats.hits / (stats.hits + stats.misses || 1)
     }, 'Cache statistics');
-  }, 300000); 
+  }, 300000);
 
   const cacheMiddleware = (duration) => (req, res, next) => {
     const key = req.originalUrl || req.url;
@@ -122,8 +129,8 @@ if (cluster.isPrimary) {
     next();
   };
 
-  app.use(compression({ level: 6 })); 
-  app.use(express.json());
+  app.use(compression({ level: 6 }));
+  app.use(express.json({ limit: '10mb' }));
 
   const staticOptions = {
     maxAge: '1d',
@@ -133,7 +140,7 @@ if (cluster.isPrimary) {
       if (path.endsWith('.html')) {
         res.setHeader('Cache-Control', 'public, max-age=0');
       } else if (path.match(/\.(js|css|jpg|jpeg|png|gif|ico|svg)$/)) {
-        res.setHeader('Cache-Control', 'public, max-age=86400'); 
+        res.setHeader('Cache-Control', 'public, max-age=86400');
       }
     }
   };
@@ -148,12 +155,8 @@ if (cluster.isPrimary) {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-XSS-Protection', '1; mode=block');
     res.setHeader('Referrer-Policy', 'no-referrer');
-    res.setHeader(
-      'Content-Security-Policy', 
-      "frame-ancestors 'self' null about:blank;"
-    );
+    res.setHeader('Content-Security-Policy', "frame-ancestors 'self' null about:blank;");
     res.setHeader('Access-Control-Allow-Origin', '*');
-    
     next();
   });
 
@@ -182,42 +185,75 @@ if (cluster.isPrimary) {
 
   app.use("/api/predictions", aiLimiter, async (req, res) => {
     try {
-      const { messages } = req.body;
+      const { messages, hasAttachment } = req.body;
 
-      if (!Array.isArray(messages) || !messages.every(msg => 
-        typeof msg.content === 'string' && 
-        typeof msg.role === 'string' &&
-        (msg.role === 'user' || msg.role === 'assistant' || msg.role === 'system')
-      )) {
-        res.status(400).send("Invalid input: messages must be an array with valid role and content properties");
+      if (!Array.isArray(messages)) {
+        res.status(400).send("Invalid input: messages must be an array");
         logger.warn('Invalid input format for AI predictions');
         return;
       }
 
+      const formattedMessages = messages.map((msg, index) => {
+        if (index === messages.length - 1 && hasAttachment && msg.attachments) {
+          return {
+            role: "user",
+            content: [
+              {
+                type: "image_url",
+                image_url: {
+                  url: msg.attachments[0].data
+                }
+              },
+              {
+                type: "text",
+                text: msg.content || "What's in this image?"
+              }
+            ]
+          };
+        }
+        
+        return {
+          role: msg.role,
+          content: msg.content
+        };
+      });
+
       logger.info('Processing AI prediction request');
+
+      const requestData = {
+        model: process.env.DEEPINFRA_MODEL || "meta-llama/Llama-3.2-90B-Vision-Instruct",
+        messages: [
+          { role: "system", content: "You are an AI model named Llama developed by Meta. Your role is to assist users by providing helpful, professional, and respectful responses." },
+          ...formattedMessages
+        ],
+        stream: true
+      };
+
+      const headers = {
+        "Content-Type": "application/json",
+        "Accept": "text/event-stream"
+      };
+
+      if (process.env.DEEPINFRA_API_KEY) {
+        headers["Authorization"] = `Bearer ${process.env.DEEPINFRA_API_KEY}`;
+        logger.debug('Using authenticated DeepInfra API call');
+      } else {
+        headers["x-deepinfra-source"] = "web-embed";
+        logger.debug('Using free tier DeepInfra API call');
+      }
 
       const response = await fetch("https://api.deepinfra.com/v1/openai/chat/completions", {
         method: "POST",
-        headers: {
-        "Content-Type": "application/json",
-        "Accept": "text/event-stream",
-        "x-deepinfra-source": "web-embed"
-        },
-        body: JSON.stringify({
-        model: "meta-llama/Llama-3.3-70B-Instruct-Turbo",
-        messages: [
-          { role: "system", content: "You are an AI model named Llama developed by Meta. Your role is to assist users by providing helpful, professional, and respectful responses." },
-          ...messages.map(msg => ({ role: msg.role, content: msg.content }))
-        ],
-        stream: true
-        })
+        headers: headers,
+        body: JSON.stringify(requestData)
       });
 
       if (!response.ok) {
         const errorText = await response.text();
         logger.error({
           statusCode: response.status,
-          errorType: 'ai_provider_error'
+          errorType: 'ai_provider_error',
+          message: errorText
         }, 'AI provider error');
         res.status(response.status).send(errorText);
         return;
@@ -258,6 +294,8 @@ if (cluster.isPrimary) {
 
   let port = parseInt(process.env.PORT || "");
   if (isNaN(port)) port = 8080;
+  
+  server.listen(port);
 
   server.on("listening", () => {
     const address = server.address();
@@ -279,6 +317,4 @@ if (cluster.isPrimary) {
 
   process.on("SIGINT", shutdown);
   process.on("SIGTERM", shutdown);
-
-  server.listen({ port });
 }
