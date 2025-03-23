@@ -673,51 +673,79 @@ document.addEventListener("DOMContentLoaded", () => {
           hasAttachment: hasAttachment
         }),
       })
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
-  
-      const reader = response.body.getReader()
-      const decoder = new TextDecoder()
-      let aiResponse = ""
-  
+
       const contentDiv = aiMessageElement.querySelector(".message-content")
       contentDiv.innerHTML = ""
-  
+      
+      const streamingText = document.createElement('div')
+      streamingText.style.whiteSpace = 'pre-wrap'
+      contentDiv.appendChild(streamingText)
+      
+      let aiResponse = ""
+      
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
+      
       while (true) {
         const { done, value } = await reader.read()
-  
-        if (done) {
-          break
-        }
-  
-        const chunk = decoder.decode(value, { stream: true })
-        const lines = chunk.split("\n")
-  
-        for (const line of lines) {
-          if (line.startsWith("data: ") && line !== "data: [DONE]") {
+        
+        if (done) break
+        
+        const text = decoder.decode(value, { stream: true })
+        buffer += text
+        
+        let lineEnd
+        while ((lineEnd = buffer.indexOf('\n')) !== -1) {
+          const line = buffer.slice(0, lineEnd)
+          buffer = buffer.slice(lineEnd + 1)
+          
+          if (line.startsWith('data:')) {
             try {
-              const data = JSON.parse(line.substring(6))
-              if (data.choices && data.choices[0].delta && data.choices[0].delta.content) {
-                const content = data.choices[0].delta.content
+              const data = line.slice(5).trim()
+              
+              if (data === '[DONE]') continue
+              
+              const parsedData = JSON.parse(data)
+              
+              if (parsedData.choices && 
+                  parsedData.choices[0].delta && 
+                  parsedData.choices[0].delta.content !== undefined) {
+                const content = parsedData.choices[0].delta.content
                 aiResponse += content
-                contentDiv.innerHTML = renderMarkdown(aiResponse)
-  
-                contentDiv.querySelectorAll("pre code").forEach((block) => {
-                  hljs.highlightElement(block)
-                })
-  
+                
+                streamingText.textContent = aiResponse
+                
+                streamingText.scrollTop = streamingText.scrollHeight
                 chatMessages.scrollTop = chatMessages.scrollHeight
               }
-            } catch (e) {}
+            } catch (e) {
+              console.warn('Error parsing SSE data:', e)
+            }
           }
         }
       }
-  
+      
+      contentDiv.innerHTML = renderMarkdown(aiResponse)
+      
+      contentDiv.querySelectorAll("pre code").forEach((block) => {
+        hljs.highlightElement(block)
+      })
+      
       messages.push({ role: "assistant", content: aiResponse })
       initializeActionButtons()
+      
+      chatMessages.scrollTo({
+        top: chatMessages.scrollHeight,
+        behavior: "smooth"
+      })
     } catch (error) {
+      console.error("Error in fetchAIResponse:", error)
+      
       const contentDiv = aiMessageElement.querySelector(".message-content")
       contentDiv.innerHTML = renderMarkdown("❌ Sorry, there was an error processing your request. Please try again.")
     } finally {

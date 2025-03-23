@@ -16,6 +16,7 @@ import NodeCache from "node-cache";
 import rateLimit from "express-rate-limit";
 import pino from "pino";
 import dotenv from "dotenv";
+import { Readable } from 'node:stream';
 
 dotenv.config();
 
@@ -200,9 +201,7 @@ if (cluster.isPrimary) {
             content: [
               {
                 type: "image_url",
-                image_url: {
-                  url: msg.attachments[0].data
-                }
+                image_url: { url: msg.attachments[0].data }
               },
               {
                 type: "text",
@@ -211,14 +210,8 @@ if (cluster.isPrimary) {
             ]
           };
         }
-        
-        return {
-          role: msg.role,
-          content: msg.content
-        };
+        return { role: msg.role, content: msg.content };
       });
-
-      logger.info('Processing AI prediction request');
 
       const requestData = {
         model: process.env.DEEPINFRA_MODEL || "meta-llama/Llama-3.2-90B-Vision-Instruct",
@@ -236,10 +229,8 @@ if (cluster.isPrimary) {
 
       if (process.env.DEEPINFRA_API_KEY) {
         headers["Authorization"] = `Bearer ${process.env.DEEPINFRA_API_KEY}`;
-        logger.debug('Using authenticated DeepInfra API call');
       } else {
         headers["x-deepinfra-source"] = "web-embed";
-        logger.debug('Using free tier DeepInfra API call');
       }
 
       const response = await fetch("https://api.deepinfra.com/v1/openai/chat/completions", {
@@ -250,29 +241,76 @@ if (cluster.isPrimary) {
 
       if (!response.ok) {
         const errorText = await response.text();
-        logger.error({
-          statusCode: response.status,
-          errorType: 'ai_provider_error',
-          message: errorText
-        }, 'AI provider error');
+        logger.error({statusCode: response.status, message: errorText}, 'AI provider error');
         res.status(response.status).send(errorText);
         return;
       }
       
-      logger.info('AI prediction streaming started');
-      res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
-      response.body.pipe(res);
+      res.setHeader("Content-Type", "text/event-stream");
+      res.setHeader("Cache-Control", "no-cache, no-transform");
+      res.setHeader("Connection", "keep-alive");
+      res.setHeader("X-Accel-Buffering", "no");
+      res.flushHeaders();
+
+      let buffer = '';
+      let responseCount = 0;
+      
+      response.body.on('data', (chunk) => {
+        try {
+          responseCount++;
+          const text = chunk.toString('utf8');
+          buffer += text;
+          
+          let newlineIndex;
+          while ((newlineIndex = buffer.indexOf('\n')) !== -1) {
+            const line = buffer.substring(0, newlineIndex);
+            buffer = buffer.substring(newlineIndex + 1);
+            
+            if (line.trim()) {
+              if (line.startsWith('data:')) {
+                res.write(`${line}\n\n`);
+              } else {
+                res.write(`data: ${line}\n\n`);
+              }
+              if (res.flush) res.flush();
+            }
+          }
+          
+          if (res.flush) res.flush();
+          
+          if (responseCount % 10 === 0) {
+            logger.debug(`Stream processing: ${responseCount} chunks`);
+          }
+        } catch (error) {
+          logger.error({error: error.message}, 'Stream processing error');
+        }
+      });
+
+      response.body.on('end', () => {
+        res.write('data: [DONE]\n\n');
+        res.end();
+        logger.info(`AI streaming completed after ${responseCount} chunks`);
+      });
+
+      response.body.on('error', (error) => {
+        logger.error({error: error.message}, 'Stream connection error');
+        if (!res.headersSent) {
+          res.status(500).send("Stream error");
+        } else {
+          res.end();
+        }
+      });
     } catch (error) {
-      logger.error({
-        error: error.message,
-        errorType: 'ai_request_error'
-      }, 'Error processing AI request');
-      res.status(500).send(error.message);
+      logger.error({error: error.message}, 'AI request error');
+      if (!res.headersSent) {
+        res.status(500).send(error.message);
+      } else {
+        res.end();
+      }
     }
   });
 
   app.use((req, res) => {
-    logger.info({path: req.path}, 'Not found - sending 404 page');
     res.status(404).sendFile(join(__dirname, publicPath, "404.html"));
   });
 
@@ -299,10 +337,7 @@ if (cluster.isPrimary) {
 
   server.on("listening", () => {
     const address = server.address();
-    logger.info({
-      port: address.port,
-      workerId: process.pid
-    }, 'Server listening');
+    logger.info({port: address.port, workerId: process.pid}, 'Server listening');
   });
 
   const shutdown = () => {
@@ -310,7 +345,6 @@ if (cluster.isPrimary) {
     server.close(() => {
       logger.info('HTTP server closed');
       bare.close();
-      logger.info('Bare server closed');
       process.exit(0);
     });
   };
