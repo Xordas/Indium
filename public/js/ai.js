@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const messages = [
-    { role: "assistant", content: "Hello! I'm Llama, an AI assistant developed by Meta. How can I help you today?" },
+    { role: "assistant", content: "Hello! I'm an AI assistant here to help you. How may I assist you today?" },
   ]
 
   let isWaitingForResponse = false
@@ -446,7 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
   
       if (role === "assistant" && content.trim() !== "") {
-        const isWelcomeMessage = content.includes("Hello! I'm Llama, an AI assistant developed by Meta");
+        const isWelcomeMessage = content.includes("Hello! I'm an AI assistant here to help you. How may I assist you today?");
         
         if (!isWelcomeMessage) {
           const actionsDiv = document.createElement("div")
@@ -764,7 +764,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const messageContent = contentDiv.textContent.trim();
       
       if (messageContent === "" || 
-          messageContent.includes("Hello! I'm Llama, an AI assistant developed by Meta")) {
+          messageContent.includes("Hello! I'm an AI assistant here to help you. How may I assist you today?")) {
         continue;
       }
       
@@ -782,7 +782,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       
       if (messageContent === "" || 
-          messageContent.includes("Hello! I'm Llama, an AI assistant developed by Meta")) {
+          messageContent.includes("Hello! I'm an AI assistant here to help you. How may I assist you today?")) {
         return;
       }
       

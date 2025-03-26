@@ -213,10 +213,15 @@ if (cluster.isPrimary) {
         return { role: msg.role, content: msg.content };
       });
 
+      const selectedModel = process.env.DEEPINFRA_MODEL || "meta-llama/Llama-3.2-90B-Vision-Instruct";
+      const systemPrompt = selectedModel.toLowerCase().includes("gemini")
+        ? "You are an advanced AI assistant named Gemini 1.5 developed by Google. Your mission is to provide creative, accurate, and thoughtful responses. Always be respectful, clear, and informative while assisting users with their queries."
+        : "You are a helpful assistant.";
+      
       const requestData = {
-        model: process.env.DEEPINFRA_MODEL || "meta-llama/Llama-3.2-90B-Vision-Instruct",
+        model: selectedModel,
         messages: [
-          { role: "system", content: "You are an advanced AI assistant named Gemini 1.5 developed by Google. Your mission is to provide creative, accurate, and thoughtful responses. Always be respectful, clear, and informative while assisting users with their queries." },
+          { role: "system", content: systemPrompt },
           ...formattedMessages
         ],
         stream: true
