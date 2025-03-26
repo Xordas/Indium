@@ -216,7 +216,7 @@ if (cluster.isPrimary) {
       const requestData = {
         model: process.env.DEEPINFRA_MODEL || "meta-llama/Llama-3.2-90B-Vision-Instruct",
         messages: [
-          { role: "system", content: "You are an AI model named Llama developed by Meta. Your role is to assist users by providing helpful, professional, and respectful responses." },
+          { role: "system", content: "You are an advanced AI assistant named Gemini 1.5 developed by Google. Your mission is to provide creative, accurate, and thoughtful responses. Always be respectful, clear, and informative while assisting users with their queries." },
           ...formattedMessages
         ],
         stream: true

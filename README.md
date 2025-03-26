@@ -1,34 +1,13 @@
 # Indium
 
-Indium is a high-performance, privacy-focused web proxy designed to provide secure and unrestricted internet access. Featuring an integrated collection of apps and games, Indium combines entertainment with powerful web browsing capabilities in a single platform.
+Indium is a high-performance web proxy with built-in apps and games, designed for secure and private browsing.
 
-## Features
+## Key Features
 
-- **Secure Browsing**: Advanced web proxy technology that keeps your browsing activity private
-- **Multi-Protocol Support**: Compatible with multiple proxy methods (Ultraviolet, Epoxy, BARE)
-- **Built-in Apps & Games**: Extensive collection of pre-configured web applications and games
-- **Privacy-Focused**: No personally identifiable information (PII) is stored
-- **Customizable Settings**: Fine-tune your browsing experience to your preferences
-- **High Performance**: Utilizes multi-core processing and advanced caching for speed
-- **AI Assistant Integration**: Built-in AI helper for enhanced user experience
-
-## Privacy Commitment
-
-Indium takes your privacy seriously:
-
-- **Zero PII Logging**: Our logs never contain personally identifiable information
-- **Privacy-Enhanced Requests**: Web requests are processed through secure proxies
-- **No IP Tracking**: User IP addresses are not stored or tracked
-- **Content Security**: Advanced headers protect against common web vulnerabilities
-- **Open Source**: All code can be audited for security compliance
-
-## Technical Stack
-
-- **Backend**: Node.js with Express
-- **Performance**: Multi-threaded architecture using Node.js clusters
-- **Caching**: Efficient memory caching with configurable TTLs
-- **Security**: Comprehensive security headers and request sanitization
-- **Logging**: Structured, privacy-focused logging with pino
+- **Secure Proxy**: Privacy-focused browsing with no PII logging
+- **Apps & Games**: Built-in collection of web applications and games
+- **AI Assistant**: Integrated AI to help users qith any questions
+- **Customizable**: Adjustable settings to personalize user experience
 
 ## Quick Start
 
@@ -37,12 +16,27 @@ Indium takes your privacy seriously:
 git clone https://github.com/xordas/indium.git
 cd indium
 
+# Set up environment (copy example and edit as needed)
+cp .example.env .env # Linux  
+Copy-Item .example.env -Destination .env # Windows PowerShell  
+copy .example.env .env # Windows CMD  
+
 # Install dependencies
 npm install
 
-# Start the server
+# Development mode
 node main.js
 
-# For production environments
+# Production mode
 npm install -g pm2
-pm2 start main.js --name "indium"
+pm2 start main.js --name "indium" --watch
+
+# Access the application
+# Open http://localhost:8080 in your browser
+```
+
+## Tech Stack
+Node.js, Express, Ultraviolet, Bare Server, JavaScript
+
+## License
+Indium is licened under the AGPL 3.0 license, see license file for more.
