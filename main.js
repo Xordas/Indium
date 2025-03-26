@@ -17,6 +17,7 @@ import rateLimit from "express-rate-limit";
 import pino from "pino";
 import dotenv from "dotenv";
 import { Readable } from 'node:stream';
+import { readFileSync } from 'node:fs';
 
 dotenv.config();
 
@@ -215,7 +216,7 @@ if (cluster.isPrimary) {
 
       const selectedModel = process.env.DEEPINFRA_MODEL || "meta-llama/Llama-3.2-90B-Vision-Instruct";
       const systemPrompt = selectedModel.toLowerCase().includes("gemini")
-        ? "You are an advanced AI assistant named Gemini 1.5 developed by Google. Your mission is to provide creative, accurate, and thoughtful responses. Always be respectful, clear, and informative while assisting users with their queries."
+        ? readFileSync(join(__dirname, "gemini.txt"), "utf8")
         : "You are a helpful assistant.";
       
       const requestData = {
